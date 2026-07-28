@@ -1,0 +1,15 @@
+name = "cf-hono-supabase-gemini-api-template"
+main = "src/index.ts"
+compatibility_date = "2026-06-08"
+
+[env.production]
+routes = [
+  { pattern = "api.demo-route.com/*", custom_domain = true }
+]
+vars = { ENVIRONMENT = "production" }
+
+[env.staging]
+routes = [
+  { pattern = "staging-api.demo-route.com/*", custom_domain = true }
+]
+vars = { ENVIRONMENT = "staging" }
