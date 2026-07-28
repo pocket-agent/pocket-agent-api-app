@@ -5,6 +5,7 @@ import { authRouter } from "@/routes/auth";
 import { chatRouter } from "@/routes/chat";
 import { healthRouter } from "@/routes/health";
 import { meRouter } from "@/routes/me";
+import { statusRouter } from "@/routes/status";
 import { Env, Variables } from "@/types";
 
 const app = new Hono<{ Bindings: Env; Variables: Variables }>();
@@ -14,6 +15,7 @@ app.use("*", corsMiddleware);
 app.use("*", errorHandler);
 
 app.route("/health", healthRouter);
+app.route("/status", statusRouter);
 
 const secured = new Hono<{ Bindings: Env; Variables: Variables }>();
 secured.use("*", authMiddleware);

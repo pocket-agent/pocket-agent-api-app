@@ -17,6 +17,7 @@ Monorepo: [../../README.md](../../README.md) · Architecture: [../../docs/APPS_A
 | `GET /health` | No | Liveness |
 | `GET /auth` | Google JWT | Token valid + minimal identity |
 | `GET /me` | Google JWT | Profile from token claims |
+| `GET /status` | No | Worker + Pocket Node reachability |
 | `POST /chat` | Google JWT | Proxy to Pocket Node (`POCKET_NODE_URL`) |
 
 ## Local dev
