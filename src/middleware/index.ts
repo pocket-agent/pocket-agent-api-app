@@ -5,32 +5,23 @@ import { errorResponse } from "@/utils/response";
 import { Env, Variables } from "@/types";
 
 /**
- * Authentication middleware
- * Verifies JWT and extracts user ID
- * If invalid, returns 401 Unauthorized
+ * Verifies Google OAuth ID token (Bearer JWT) and attaches user to context.
  */
 export const authMiddleware = async (
   c: Context<{ Bindings: Env; Variables: Variables }>,
   next: Next
 ) => {
-  const userId = await getAuthenticatedUser(c);
+  const user = await getAuthenticatedUser(c);
 
-  if (!userId) {
-    return c.json(
-      errorResponse("Unauthorized", "UNAUTHORIZED"),
-      { status: 401 }
-    );
+  if (!user) {
+    return c.json(errorResponse("Unauthorized", "UNAUTHORIZED"), { status: 401 });
   }
 
-  // Store user ID in context for use in route handlers
-  c.set("userId", userId);
+  c.set("userId", user.sub);
+  c.set("googleUser", user);
   await next();
 };
 
-/**
- * CORS middleware
- * Uses Hono's built-in CORS handler
- */
 export const corsMiddleware = cors({
   origin: (origin, c) => {
     const allowed = c.env.ALLOWED_ORIGINS?.split(",").map((o: string) => o.trim()) ?? [];
@@ -47,10 +38,6 @@ export const corsMiddleware = cors({
   credentials: true,
 });
 
-/**
- * Error handling middleware
- * Catches errors and returns standardized error response
- */
 export const errorHandler = async (
   c: Context<{ Bindings: Env; Variables: Variables }>,
   next: Next
@@ -62,10 +49,7 @@ export const errorHandler = async (
 
     if (error instanceof Error) {
       return c.json(
-        errorResponse(
-          error.message || "Internal server error",
-          "INTERNAL_SERVER_ERROR"
-        ),
+        errorResponse(error.message || "Internal server error", "INTERNAL_SERVER_ERROR"),
         { status: 500 }
       );
     }

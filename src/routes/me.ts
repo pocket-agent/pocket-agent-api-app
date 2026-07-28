@@ -1,34 +1,24 @@
 import { Hono } from "hono";
-import { getSupabaseClientWithJWT } from "@/lib/supabase";
-import { extractJWT } from "@/utils/jwt";
-import { errorResponse, successResponse } from "@/utils/response";
+import { successResponse } from "@/utils/response";
 import { Env, Variables } from "@/types";
 
 export const meRouter = new Hono<{ Bindings: Env; Variables: Variables }>();
 
-meRouter.get("/", async (c) => {
-  const token = extractJWT(c.req.header("Authorization") || null);
-
-  if (!token) {
-    return c.json(errorResponse("Unauthorized", "UNAUTHORIZED"), { status: 401 });
-  }
-
-  const supabase = getSupabaseClientWithJWT(c.env, token);
-  const { data, error } = await supabase.auth.getUser();
-
-  if (error || !data.user) {
-    return c.json(errorResponse("Unauthorized", "UNAUTHORIZED"), { status: 401 });
-  }
-
-  const { id, email, user_metadata, app_metadata, created_at } = data.user;
+meRouter.get("/", (c) => {
+  const user = c.get("googleUser");
 
   return c.json(
     successResponse({
-      id,
-      email,
-      user_metadata,
-      app_metadata,
-      created_at,
+      id: user?.sub,
+      email: user?.email,
+      user_metadata: {
+        name: user?.name,
+        picture: user?.picture,
+        given_name: user?.given_name,
+        family_name: user?.family_name,
+        email_verified: user?.email_verified,
+      },
+      app_metadata: {},
     })
   );
 });

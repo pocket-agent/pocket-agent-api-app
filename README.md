@@ -1,64 +1,53 @@
-# cf-hono-supabase-gemini-api-template
+# Pocket Agent API (`apps/api`)
 
-Cloudflare Worker API built with **Hono**, **Supabase Auth**, and **Google Gemini** from [@open-templates](https://github.com/open-templates). Pairs with [react-supabase-auth-ai-chat-template](https://github.com/open-templates/react-supabase-auth-ai-chat-template).
+Hono **Cloudflare Worker** — validates **Google OAuth ID tokens** (JWT) and will proxy to the Pocket Node Python agent.
 
-## Quick start
+Monorepo: [../../README.md](../../README.md) · Architecture: [../../docs/APPS_ARCHITECTURE.md](../../docs/APPS_ARCHITECTURE.md)
 
-1. **Use this template** on GitHub, then clone your repo.
-2. Personalize from `templates/`:
+## Auth (no Supabase)
+
+1. Web/desktop sign in with **Google** using `GOOGLE_CLIENT_ID` in the frontend.
+2. Frontend sends `Authorization: Bearer <google_id_token>` on API calls.
+3. Worker verifies the JWT with [Google's JWKS](https://www.googleapis.com/oauth2/v3/certs) and checks `aud` matches `GOOGLE_CLIENT_ID`.
+
+## Enabled routes
+
+| Route | Auth | Description |
+|-------|------|-------------|
+| `GET /health` | No | Liveness |
+| `GET /auth` | Google JWT | Token valid + minimal identity |
+| `GET /me` | Google JWT | Profile from token claims |
+| `POST /chat` | Google JWT | Proxy to Pocket Node (`POCKET_NODE_URL`) |
+
+## Local dev
 
 ```bash
-./scripts/init-from-template.sh
-```
-
-3. Install and run:
-
-```bash
-npm install
 cp .env.example .dev.vars
-# Set SUPABASE_* and GEMINI_API_KEY in .dev.vars
+# Set GOOGLE_CLIENT_ID (same as web app)
+npm install
 npm run dev
 ```
 
-See [`templates/ABOUT_TEMPLATES.md`](templates/ABOUT_TEMPLATES.md) and [`docs/INIT_TEMPLATE.md`](docs/INIT_TEMPLATE.md).
-
-## Out-of-the-box features
-
-| Endpoint | Auth | Description |
-|----------|------|-------------|
-| `GET /health` | Public | Liveness check for frontend online/offline indicator |
-| `GET /me` | Bearer JWT | Returns the authenticated Supabase user profile |
-| `POST /chat` | Bearer JWT | Send `{ "message": "..." }` to Gemini; returns model reply |
-| `GET /chat?message=...` | Bearer JWT | Query-string alternative for quick tests |
-
-See [`index.md`](index.md) for detailed behavior and extension guidance.
-
-Test:
+Default worker port is often `8787` — use `8788` in `config/user-setup.yaml` if the agent also uses `8787`:
 
 ```bash
-curl http://localhost:8787/health
-
-# With a Supabase access token:
-curl -X POST http://localhost:8787/chat \
-  -H "Authorization: Bearer YOUR_JWT" \
-  -H "Content-Type: application/json" \
-  -d '{"message":"Hello from the worker"}'
+wrangler dev --port 8788
 ```
 
-Full setup: [`QUICKSTART.md`](QUICKSTART.md) · Cloudflare deploy: [`CLOUDFLARE_SETUP.md`](CLOUDFLARE_SETUP.md)
+## Environment
 
-## Environment variables
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GOOGLE_CLIENT_ID` | Yes | Google Cloud OAuth client ID (shared with web/Tauri) |
+| `ALLOWED_ORIGINS` | No | CORS origins (comma-separated) |
+| `POCKET_NODE_URL` | No | Pocket Node URL when proxy routes are enabled |
 
-| Variable | Required | Purpose |
-|----------|----------|---------|
-| `SUPABASE_URL` | Yes | Supabase project URL |
-| `SUPABASE_ANON_KEY` | Yes | Anon key for JWT-scoped client |
-| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Reserved for future admin operations |
-| `GEMINI_API_KEY` | Yes | Google AI Studio key for `@google/genai` |
-| `GEMINI_MODEL` | No | Model id (default `gemini-2.5-flash`) |
-| `ALLOWED_ORIGINS` | No | Comma-separated CORS origins |
-| `ENVIRONMENT` | No | `development` / `staging` / `production` |
+Deploy secrets: `wrangler secret put GOOGLE_CLIENT_ID`
 
-## License
+## Frontend contract
 
-MIT
+Store the Google **ID token** as `localStorage['x-auth-token']` (same key as the web template) so `apiFetch` attaches it as Bearer JWT.
+
+## Nested git
+
+This folder is a separate git repo inside the monorepo.

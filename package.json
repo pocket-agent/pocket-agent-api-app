@@ -1,16 +1,12 @@
 {
-  "name": "cf-hono-supabase-gemini-api-template",
+  "name": "pocket-agent-api",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Cloudflare Worker API with Hono, Supabase Auth, and Gemini. Pairs with react-supabase-auth-template.",
+  "description": "Pocket Agent API — Hono on Cloudflare Workers, Google OAuth JWT, proxy to Pocket Node.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/open-templates/cf-hono-supabase-gemini-api-template.git"
-  },
-  "homepage": "https://github.com/open-templates/cf-hono-supabase-gemini-api-template#readme",
-  "bugs": {
-    "url": "https://github.com/open-templates/cf-hono-supabase-gemini-api-template/issues"
+    "url": "git+https://github.com/pocket-agent/pocket-agent-api-app.git"
   },
   "license": "MIT",
   "scripts": {
@@ -23,12 +19,10 @@
     "format": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
-    "@google/genai": "^1.0.0",
-    "hono": "^4.1.0",
-    "@supabase/supabase-js": "^2.38.0",
-    "zod": "^3.22.4",
     "@hono/zod-validator": "^0.2.0",
-    "jose": "^5.1.0"
+    "hono": "^4.1.0",
+    "jose": "^5.1.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240125.0",
