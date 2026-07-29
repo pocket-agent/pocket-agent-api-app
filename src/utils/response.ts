@@ -2,9 +2,9 @@
  * Standardized API response helpers
  */
 
-import { ApiResponse, SuccessResponse, ErrorResponse } from "@/types";
+import type { ApiErrorResponse, ApiSuccessResponse } from "@pocket-agent/sdk";
 
-export const successResponse = <T>(data: T): SuccessResponse<T> => ({
+export const successResponse = <T>(data: T): ApiSuccessResponse<T> => ({
   success: true,
   data,
 });
@@ -13,7 +13,7 @@ export const errorResponse = (
   message: string,
   code?: string,
   details?: Record<string, unknown>
-): ErrorResponse => ({
+): ApiErrorResponse => ({
   success: false,
   error: {
     message,

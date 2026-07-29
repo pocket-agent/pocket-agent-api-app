@@ -6,7 +6,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', 'scripts/lib/template-init/**'],
+    ignores: ['dist/**', 'node_modules/**'],
   },
   {
     files: ['**/*.ts'],

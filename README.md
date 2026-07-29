@@ -1,34 +1,36 @@
-# Pocket Agent API
+# pocket-agent-api-app
 
-Hono **Cloudflare Worker** — validates **Google OAuth ID tokens** and proxies to the Pocket Node Python agent.
+Hono **Cloudflare Worker** — validates **Google OAuth ID tokens** and proxies to the Pocket Node.
 
-Workspace: [../docs/WORKSPACE_LAYOUT.md](../docs/WORKSPACE_LAYOUT.md) · Flow: [../docs/APPS_ARCHITECTURE.md](../docs/APPS_ARCHITECTURE.md)
+Part of the open-source **[Pocket Agent](https://github.com/pocket-agent)** ecosystem · **v0.1.0**
 
-## Auth
-
-1. Web/desktop sign in with **Google** using `GOOGLE_CLIENT_ID`.
-2. Client sends `Authorization: Bearer <google_id_token>`.
-3. Worker verifies JWT via Google JWKS; checks `aud` matches `GOOGLE_CLIENT_ID`.
-
-## Routes
+## What's included (0.1.0)
 
 | Route | Auth | Description |
 |-------|------|-------------|
 | `GET /health` | No | Liveness |
-| `GET /auth` | Google JWT | Token valid + identity |
-| `GET /me` | Google JWT | Profile from claims |
 | `GET /status` | No | Worker + Pocket Node reachability |
-| `POST /chat` | Google JWT | Proxy to `POCKET_NODE_URL` |
+| `GET /auth` | Google JWT | Token validation |
+| `GET /me` | Google JWT | Profile from claims |
+| `POST /chat` | Google JWT | Proxy to Pocket Node |
 
-## Local dev
+- Response envelopes from `@pocket-agent/sdk`
+- CORS via `ALLOWED_ORIGINS`
+- Local dev with `wrangler dev` on `:8788`
+
+## Quick start
 
 ```bash
+cd ../pocket-agent-sdk && npm run build
 cp .env.example .dev.vars
-# GOOGLE_CLIENT_ID, POCKET_NODE_URL=http://127.0.0.1:8787
 npm install
-npm run dev   # :8788
+npm run dev
 ```
 
-Pair with `../pocket-agent-web-app` and `../core` (`pocket-agent serve`).
+Set `GOOGLE_CLIENT_ID` and `POCKET_NODE_URL=http://127.0.0.1:8787`. Run `pocket-agent serve` in [pocket-agent](../pocket-agent/).
 
-Deploy: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) · [INSTRUCTIONS.md](INSTRUCTIONS.md)
+Pair with [pocket-agent-web-app](../pocket-agent-web-app/) or [pocket-agent-desktop-app](../pocket-agent-desktop-app/).
+
+## Docs
+
+[INSTRUCTIONS.md](INSTRUCTIONS.md) · [CHANGELOG.md](CHANGELOG.md) · [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) · [../docs/APPS_ARCHITECTURE.md](../docs/APPS_ARCHITECTURE.md)

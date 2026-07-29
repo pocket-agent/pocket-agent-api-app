@@ -1,4 +1,9 @@
 import type { GoogleUser } from "@/lib/google-auth";
+import type {
+  ApiErrorResponse,
+  ApiResponse,
+  ApiSuccessResponse,
+} from "@pocket-agent/sdk";
 
 export interface Env {
   GOOGLE_CLIENT_ID: string;
@@ -16,18 +21,7 @@ export interface Variables {
   googleUser?: GoogleUser;
 }
 
-export interface SuccessResponse<T> {
-  success: true;
-  data: T;
-}
+/** @deprecated use ApiSuccessResponse from @pocket-agent/sdk */
+export type SuccessResponse<T> = ApiSuccessResponse<T>;
 
-export interface ErrorResponse {
-  success: false;
-  error: {
-    message: string;
-    code?: string;
-    details?: Record<string, unknown>;
-  };
-}
-
-export type ApiResponse<T> = SuccessResponse<T> | ErrorResponse;
+export type { ApiErrorResponse, ApiResponse, ApiSuccessResponse };

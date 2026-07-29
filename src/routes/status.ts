@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { SERVICE_IDS } from "@pocket-agent/sdk";
 import { pocketNodeBaseUrl } from "@/lib/pocket-node";
 import { successResponse } from "@/utils/response";
 import { Env, Variables } from "@/types";
@@ -29,7 +30,7 @@ statusRouter.get("/", async (c) => {
 
   return c.json(
     successResponse({
-      service: "pocket-agent-api",
+      service: SERVICE_IDS.apiWorker,
       environment: c.env.ENVIRONMENT ?? "development",
       pocket_node_url: pocketNodeUrl,
       pocket_node_online: pocketNodeOnline,

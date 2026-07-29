@@ -8,9 +8,20 @@
     "type": "git",
     "url": "git+https://github.com/pocket-agent/pocket-agent-api-app.git"
   },
+  "homepage": "https://github.com/pocket-agent/pocket-agent-api-app#readme",
+  "bugs": {
+    "url": "https://github.com/pocket-agent/pocket-agent-api-app/issues"
+  },
+  "author": {
+    "name": "xarlizard",
+    "email": "38315638+xarlizard@users.noreply.github.com",
+    "url": "https://github.com/xarlizard"
+  },
   "license": "MIT",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
-    "init": "node scripts/init-from-template.mjs",
     "build": "tsc",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
@@ -19,6 +30,7 @@
     "format": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
+    "@pocket-agent/sdk": "file:../pocket-agent-sdk",
     "@hono/zod-validator": "^0.2.0",
     "hono": "^4.1.0",
     "jose": "^5.1.0",
@@ -35,6 +47,6 @@
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.1.0",
-    "@types/node": "^20.10.0"
+    "@types/node": "^24.0.0"
   }
 }
