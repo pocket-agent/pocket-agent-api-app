@@ -6,7 +6,8 @@ import type {
 } from "@pocket-agent/sdk";
 
 export interface Env {
-  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_ID?: string;
+  AUTH_MODE?: string;
   ALLOWED_ORIGINS?: string;
   ENVIRONMENT?: string;
   /** Reserved for cloud-relay chat mode (not enabled yet) */

@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
+import { isLocalAuth } from "@/lib/auth-mode";
 import { bearerFromRequest, proxyToPocketNode } from "@/lib/pocket-node";
 import { errorResponse } from "@/utils/response";
 import { Env, Variables } from "@/types";
@@ -20,7 +21,7 @@ export const chatRouter = new Hono<{ Bindings: Env; Variables: Variables }>();
 /** POST /chat — proxy to Pocket Node */
 chatRouter.post("/", zValidator("json", messageBodySchema), async (c) => {
   const token = bearerFromRequest(c.req.header("Authorization") || null);
-  if (!token) {
+  if (!token && !isLocalAuth(c.env)) {
     return c.json(errorResponse("Unauthorized", "UNAUTHORIZED"), { status: 401 });
   }
 
@@ -35,7 +36,7 @@ chatRouter.post("/", zValidator("json", messageBodySchema), async (c) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       },
-      token
+      token ?? undefined
     );
 
     const text = await upstream.text();

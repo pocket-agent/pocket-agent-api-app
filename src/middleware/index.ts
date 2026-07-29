@@ -1,16 +1,26 @@
 import { Context, Next } from "hono";
 import { cors } from "hono/cors";
+import { isLocalAuth, localDevGoogleUser } from "@/lib/auth-mode";
 import { getAuthenticatedUser } from "@/utils/auth";
 import { errorResponse } from "@/utils/response";
 import { Env, Variables } from "@/types";
 
 /**
  * Verifies Google OAuth ID token (Bearer JWT) and attaches user to context.
+ * When AUTH_MODE=none (local wrangler dev only), uses a synthetic local user.
  */
 export const authMiddleware = async (
   c: Context<{ Bindings: Env; Variables: Variables }>,
   next: Next
 ) => {
+  if (isLocalAuth(c.env)) {
+    const user = localDevGoogleUser();
+    c.set("userId", user.sub);
+    c.set("googleUser", user);
+    await next();
+    return;
+  }
+
   const user = await getAuthenticatedUser(c);
 
   if (!user) {

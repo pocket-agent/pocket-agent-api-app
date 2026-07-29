@@ -12,11 +12,13 @@ export async function proxyToPocketNode(
   env: Env,
   path: string,
   init: RequestInit,
-  authToken: string
+  authToken?: string | null
 ): Promise<Response> {
   const url = `${pocketNodeBaseUrl(env)}${path.startsWith("/") ? path : `/${path}`}`;
   const headers = new Headers(init.headers);
-  headers.set("Authorization", `Bearer ${authToken}`);
+  if (authToken) {
+    headers.set("Authorization", `Bearer ${authToken}`);
+  }
 
   return fetch(url, {
     ...init,
