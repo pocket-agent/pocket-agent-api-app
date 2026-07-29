@@ -16,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Default `POCKET_NODE_URL=http://127.0.0.1:8787` — run `pocket-agent serve` in `../pocket-agent`.
+Default `POCKET_NODE_URL=http://127.0.0.1:8787` — run `pocket-agent serve` in `../core`.
 
 ## Source layout
 
@@ -29,7 +29,7 @@ src/
 ## Do not add here
 
 - LLM calls (stay on Pocket Node)
-- React UI → `../pocket-agent-web/`
+- React UI → `../pocket-agent-web-app/`
 - Python tools → `../pocket-agent/`
 
 ## Deploy

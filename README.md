@@ -29,6 +29,6 @@ npm install
 npm run dev   # :8788
 ```
 
-Pair with `../pocket-agent-web` and `../pocket-agent` (`pocket-agent serve`).
+Pair with `../pocket-agent-web-app` and `../core` (`pocket-agent serve`).
 
 Deploy: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) · [INSTRUCTIONS.md](INSTRUCTIONS.md)

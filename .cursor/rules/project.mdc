@@ -1,18 +1,14 @@
 ---
-description: Pocket Agent API worker conventions
+description: pocket-agent-api worker conventions
 alwaysApply: true
 ---
 
-# pocket-agent-api (`apps/api`)
+# pocket-agent-api
 
-Hono Cloudflare Worker — **Google OAuth ID token** verification (no Supabase).
+Hono Cloudflare Worker — Google OAuth ID token verification, proxy to Pocket Node.
 
-- `GOOGLE_CLIENT_ID` must match the web/desktop Google Cloud app.
-- Public: `GET /health`
-- Protected (Bearer Google JWT): `GET /auth`, `GET /me`
-- Register new routes in `src/index.ts` inside the `secured` sub-app.
-- Use `successResponse` / `errorResponse` from `src/utils/response.ts`.
+- `GOOGLE_CLIENT_ID` matches `pocket-agent-web-app` and `pocket-agent/.env`
+- Routes in `src/`
+- Pairing: [pocket-agent-web](https://github.com/pocket-agent/pocket-agent-web)
 
-Pairing: [pocket-agent-web-app](https://github.com/pocket-agent/pocket-agent-web-app) — `VITE_API_BASE_URL` → this worker; `ALLOWED_ORIGINS` → frontend origin.
-
-Docs: [../../docs/API_STACK.md](../../docs/API_STACK.md)
+Docs: [../../docs/APPS_ARCHITECTURE.md](../../docs/APPS_ARCHITECTURE.md)

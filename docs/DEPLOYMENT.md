@@ -6,7 +6,7 @@ Hono worker: Google JWT verification + proxy to Pocket Node.
 
 - Cloudflare account
 - `wrangler login` or `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` for CI
-- Google OAuth client ID (same as `pocket-agent-web`)
+- Google OAuth client ID (same as `pocket-agent-web-app`)
 - Pocket Node at a URL (local or Cloudflare Tunnel)
 
 ## Secrets (production)
@@ -26,7 +26,7 @@ wrangler secret put ALLOWED_ORIGINS --env production
 ## Pocket Node + Tunnel
 
 ```bash
-cd ../pocket-agent && pocket-agent serve
+cd ../core && pocket-agent serve
 cloudflared tunnel --url http://127.0.0.1:8787
 ```
 
@@ -57,4 +57,4 @@ npm run dev
 
 - [../docs/APPS_ARCHITECTURE.md](../docs/APPS_ARCHITECTURE.md)
 - [../docs/GOOGLE_OAUTH.md](../docs/GOOGLE_OAUTH.md)
-- [../pocket-agent-web/docs/DEPLOYMENT.md](../pocket-agent-web/docs/DEPLOYMENT.md)
+- [../pocket-agent-web-app/docs/DEPLOYMENT.md](../pocket-agent-web-app/docs/DEPLOYMENT.md)
