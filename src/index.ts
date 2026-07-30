@@ -6,6 +6,7 @@ import { chatRouter } from "@/routes/chat";
 import { healthRouter } from "@/routes/health";
 import { meRouter } from "@/routes/me";
 import { statusRouter } from "@/routes/status";
+import { settingsRouter } from "@/routes/settings";
 import { Env, Variables } from "@/types";
 
 const app = new Hono<{ Bindings: Env; Variables: Variables }>();
@@ -22,6 +23,7 @@ secured.use("*", authMiddleware);
 secured.route("/auth", authRouter);
 secured.route("/me", meRouter);
 secured.route("/chat", chatRouter);
+secured.route("/settings", settingsRouter);
 app.route("/", secured);
 
 app.notFound((c) => {
