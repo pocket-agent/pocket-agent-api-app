@@ -1,4 +1,4 @@
-import { LOCAL_DEV_USER, LOCAL_DEV_USER_ID } from "@pocket-agent/sdk";
+import { LOCAL_DEV_USER, LOCAL_DEV_USER_ID } from "pocket-agent-sdk";
 import type { Env } from "@/types";
 import type { GoogleUser } from "@/lib/google-auth";
 

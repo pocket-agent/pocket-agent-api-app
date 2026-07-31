@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Google OAuth** — verify ID tokens via Google JWKS; `GOOGLE_CLIENT_ID` must match web/desktop
 - **Routes** — `GET /health`, `GET /status`, `GET /auth`, `GET /me`, `POST /chat`
 - **Pocket Node proxy** — forwards authenticated chat to `POCKET_NODE_URL` (default `127.0.0.1:8787`)
-- **Standardized responses** — `{ success, data }` / `{ success: false, error }` via `@pocket-agent/sdk`
+- **Standardized responses** — `{ success, data }` / `{ success: false, error }` via `pocket-agent-sdk`
 - **CORS** — configurable `ALLOWED_ORIGINS` for local and production frontends
 
 ---

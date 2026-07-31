@@ -3,7 +3,7 @@ import type {
   ApiErrorResponse,
   ApiResponse,
   ApiSuccessResponse,
-} from "@pocket-agent/sdk";
+} from "pocket-agent-sdk";
 
 export interface Env {
   GOOGLE_CLIENT_ID?: string;
@@ -22,7 +22,7 @@ export interface Variables {
   googleUser?: GoogleUser;
 }
 
-/** @deprecated use ApiSuccessResponse from @pocket-agent/sdk */
+/** @deprecated use ApiSuccessResponse from pocket-agent-sdk */
 export type SuccessResponse<T> = ApiSuccessResponse<T>;
 
 export type { ApiErrorResponse, ApiResponse, ApiSuccessResponse };

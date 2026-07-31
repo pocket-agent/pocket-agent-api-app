@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { SERVICE_IDS } from "@pocket-agent/sdk";
+import { SERVICE_IDS } from "pocket-agent-sdk";
 import { Env, Variables } from "@/types";
 
 export const healthRouter = new Hono<{ Bindings: Env; Variables: Variables }>();

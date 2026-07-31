@@ -36,7 +36,7 @@ Hono <strong>Cloudflare Worker</strong> for Pocket Agent — validates Google OA
 | `GET /me` | Google JWT | Profile from claims |
 | `POST /chat` | Google JWT | Proxy to Pocket Node |
 
-- Response envelopes from `@pocket-agent/sdk`
+- Response envelopes from `pocket-agent-sdk`
 - CORS via `ALLOWED_ORIGINS`
 - Local dev with `wrangler dev` on `:8788`
 - Bundled inside the desktop app for offline-local use

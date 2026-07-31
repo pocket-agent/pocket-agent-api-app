@@ -10,7 +10,7 @@
 
 ## Shared types
 
-API envelopes and service IDs come from **`@pocket-agent/sdk`**. Worker-specific types (`Env`, `Variables`, `GoogleUser`) stay in `src/types/`.
+API envelopes and service IDs come from **`pocket-agent-sdk`**. Worker-specific types (`Env`, `Variables`, `GoogleUser`) stay in `src/types/`.
 
 ## Local dev
 

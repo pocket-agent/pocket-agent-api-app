@@ -30,7 +30,7 @@
     "format": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
-    "@pocket-agent/sdk": "file:../pocket-agent-sdk",
+    "pocket-agent-sdk": "file:../pocket-agent-sdk",
     "@hono/zod-validator": "^0.2.0",
     "hono": "^4.1.0",
     "jose": "^5.1.0",

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { SERVICE_IDS } from "@pocket-agent/sdk";
+import { SERVICE_IDS } from "pocket-agent-sdk";
 import { pocketNodeBaseUrl } from "@/lib/pocket-node";
 import { successResponse } from "@/utils/response";
 import { Env, Variables } from "@/types";
